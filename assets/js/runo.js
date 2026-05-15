@@ -54,7 +54,7 @@
   /* Read data from DOM so HTML is the single source of truth */
   const slides = slots.map(slot => ({
     index: parseInt(slot.dataset.index, 10),
-    color: slot.dataset.color || '#FF6B35',
+    color: slot.dataset.color || '#7C3AED',
     title: slot.dataset.title || '',
     desc:  slot.dataset.desc  || '',
   }));
@@ -149,7 +149,11 @@
     if (progLabel) progLabel.textContent = `${index + 1} / ${total}`;
 
     /* ④ Dots */
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+      if (i === index) d.style.background = slide.color;
+      else d.style.background = '';
+    });
 
     /* ⑤ Cards — apply/remove active + dynamic glow */
     cards.forEach((card, i) => {
@@ -158,7 +162,7 @@
       /* Update glow color */
       const glow = card.querySelector('.feat-glow');
       if (glow) {
-        const c = slides[i]?.color || '#FF6B35';
+        const c = slides[i]?.color || '#7C3AED';
         glow.style.background = `radial-gradient(circle at 30% 30%, ${c}22, transparent 65%)`;
       }
       /* Update card border accent */
